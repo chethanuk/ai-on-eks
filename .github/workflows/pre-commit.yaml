@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
     - main
-    - '!release*'    
+    - '!release*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -41,7 +41,7 @@ jobs:
     - name: Check Python ${{ matrix.python-version }} version
       run: |
         python -V
-        
+
         # Install terraform-docs
         curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.17.0/terraform-docs-v0.17.0-$(uname)-amd64.tar.gz
         tar -xzf terraform-docs.tar.gz
@@ -58,11 +58,14 @@ jobs:
         terraform_version: "1.7.4"
         terraform_wrapper: false
 
-    - name: Generate TF docs
-      uses: terraform-docs/gh-actions@e47bfa196e79fa50987ef391be236d9d97b0c786 # v1.2.0
+    - name: Generate TF docs for infra
+      uses: terraform-docs/gh-actions@6de6da0cefcc6b4b7a5cbea4d79d97060733093c # v1.4.1
       with:
-        find-dir: ^infra/*|^blueprints/*
+        find-dir: infra/
+        output-file: README.md
+        output-method: inject
 
     - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
       env:
         PCT_TFPATH: terraform
+        SKIP: trufflehog
