@@ -44,6 +44,55 @@ GitHub provides additional document on [forking a repository](https://help.githu
 Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
 
 
+## Developer Setup
+
+To ensure consistency and code quality, configure your local development environment as follows:
+
+0. (Optional): Install Terraform if it is not already installed:
+
+   - Install tfenv by following the instructions at https://github.com/tfutils/tfenv#tfenv-install-version
+   - Then run `tfenv install 1.12.1` or `tfenv install latest` to install the latest stable version
+
+1. Install development dependencies like pre-commit using:
+   ```bash
+   pip install -r requirements-dev.txt
+   ```
+
+2. Configure pre-commit hooks:
+   ```bash
+   pre-commit install
+   pre-commit run -a
+   ```
+
+3. Install and configure secret scanning with TruffleHog:
+   Please see the installation instructions at https://github.com/trufflesecurity/trufflehog?tab=readme-ov-file#floppy_disk-installation. For example:
+   ```bash
+   curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
+   ```
+
+4. Install terraform-docs:
+   A utility to generate documentation from Terraform modules in various output formats.
+   Please see the installation instructions at https://github.com/terraform-docs/terraform-docs?tab=readme-ov-file#install. For example:
+   ```bash
+   curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.20.0/terraform-docs-v0.20.0-$(uname)-amd64.tar.gz
+   tar -xzf terraform-docs.tar.gz
+   chmod +x terraform-docs
+   mv terraform-docs /usr/local/bin/terraform-docs
+   ```
+
+5. Install tflint:
+   A Terraform linter for detecting errors, best practices, and potential security issues.
+   Please see the installation instructions at https://github.com/terraform-linters/tflint?tab=readme-ov-file#installation. For example:
+   ```bash
+   curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+   ```
+   Verify installation:
+   ```bash
+   tflint -v
+   # TFLint version 0.57.0
+   # + ruleset.terraform (0.12.0-bundled)
+   ```
+
 ## Code of Conduct
 This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
 For more information see the [Code of Conduct FAQ](https://aws.github.io/code-of-conduct-faq) or contact
